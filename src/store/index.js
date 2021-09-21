@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    isLoggedIn: false,
+    isLoggedIn: localStorage.access_token,
     products: [],
     details: null,
     imageUrl: '',
@@ -49,12 +49,25 @@ export default new Vuex.Store({
       const code = payload.code;
       const price = payload.price;
       const imageUrl = payload.imageUrl;
+
       http.get(`/products/${code}`)
         .then(resp => {
-          console.log(resp.data);
           resp.data.product.price = price;
           resp.data.product.imageUrl = imageUrl;
           commit('SET_DETAILS', resp.data.product)
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    },
+    addToWishlist(context, payload) {
+      http.post('/wishlists/add', payload, {
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(resp => {
+          console.log(resp.data);
         })
         .catch(err => {
           console.log(err);

@@ -36,7 +36,7 @@
         </table>
       </div>
       <hr>
-      <button type="button" class="btn btn-light btn-md mr-1 mb-2"><i
+      <button @click.prevent="addToWishlist(product.name, product.price, product.imageUrl, product.color.text)" type="button" class="btn btn-light btn-md mr-1 mb-2"><i
           class="fas fa-shopping-cart pr-2"></i>Add to Wishlist</button>
     </div>
   </div>
@@ -55,6 +55,12 @@ export default {
         },
         imageUrl() {
             return this.$store.state.imageUrl
+        }
+    },
+    methods: {
+        addToWishlist(name, price, imageUrl, color) {
+            const code = this.$route.params.code;
+            this.$store.dispatch('addToWishlist', {name, price, imageUrl, color, code})
         }
     }
 }

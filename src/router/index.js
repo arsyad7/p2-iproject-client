@@ -37,6 +37,12 @@ const routes = [
     component: () =>
       import("../views/Details.vue"),
   },
+  {
+    path: "/wishlists",
+    name: "Wishlist",
+    component: () =>
+      import("../views/Wishlist.vue"),
+  },
 ];
 
 const router = new VueRouter({
@@ -44,5 +50,25 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  const access_token = localStorage.access_token;
+  const destination = to.name;
+
+  switch (destination) {
+    case "Login":
+      access_token ? next('/') : next()
+      break;
+    case "Register":
+      access_token ? next('/') : next()
+      break;
+    case "Wishlist":
+      access_token ? next() : next('/login')
+      break;
+    default:
+      next()
+      break;
+  }
+})
 
 export default router;

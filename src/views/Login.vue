@@ -31,7 +31,8 @@
                   id="exampleInputPassword1"
                 />
               </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary">Submit</button><br>
+              <p style="color: black">Dont have an account? <a @click.prevent="goToRegister" href="">register</a></p>
             </form>
           </div>
         </div>
@@ -63,6 +64,9 @@ export default {
             .catch(err => {
                 console.log(err);
             })
+        },
+        goToRegister() {
+          this.$router.push('/register')
         }
     }
 }
