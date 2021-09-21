@@ -16,7 +16,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Login</a>
+                    <a @click.prevent="goToLogin" class="nav-link active" aria-current="page" href="#">Login</a>
                 </li>
                 <li class="nav-item">
                     <a @click.prevent="$emit('logout')" class="nav-link active" aria-current="page" href="#">Logout</a>
@@ -29,7 +29,12 @@
 
 <script>
 export default {
-
+    name: 'navbar',
+    methods: {
+        goToLogin() {
+            this.$router.push({name: 'Login'})
+        }
+    }
 }
 </script>
 
