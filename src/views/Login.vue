@@ -19,9 +19,6 @@
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                 />
-                <div id="emailHelp" class="form-text">
-                  We'll never share your email with anyone else.
-                </div>
               </div>
               <div class="mb-3">
                 <label style="color: black" for="exampleInputPassword1" class="form-label"
@@ -48,6 +45,24 @@ export default {
         return {
             email: '',
             password: ''
+        }
+    },
+    methods: {
+        handleLogin() {
+            const payload = {
+                email: this.email,
+                password: this.password
+            }
+
+            this.$store.dispatch('login', payload)
+            .then(resp => {
+                localStorage.setItem('access_token', resp.data.access_token);
+                this.$store.commit('SET_ISLOGGEDIN', true)
+                this.$router.push({name: 'Home'})
+            })
+            .catch(err => {
+                console.log(err);
+            })
         }
     }
 }

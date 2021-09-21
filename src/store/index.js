@@ -5,11 +5,20 @@ import http from "../apis/http";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    isLoggedIn: false,
+  },
+  mutations: {
+    SET_ISLOGGEDIN(state, payload) {
+      state.isLoggedIn = payload
+    }
+  },
   actions: {
     register(context, payload) {
       return http.post('/users/register', payload)
+    },
+    login(context, payload) {
+      return http.post('/users/login', payload)
     }
   },
   modules: {},
