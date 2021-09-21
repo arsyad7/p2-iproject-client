@@ -7,10 +7,14 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isLoggedIn: false,
+    products: []
   },
   mutations: {
     SET_ISLOGGEDIN(state, payload) {
       state.isLoggedIn = payload
+    },
+    SET_PRODUCTS(state, payload) {
+      state.products = payload
     }
   },
   actions: {
@@ -19,6 +23,16 @@ export default new Vuex.Store({
     },
     login(context, payload) {
       return http.post('/users/login', payload)
+    },
+    fetchProducts({ commit }) {
+      http.get('/products')
+        .then(resp => {
+          console.log(resp.data.results);
+          commit('SET_PRODUCTS', resp.data)
+        })  
+        .catch(err => {
+          console.log(err);
+        })
     }
   },
   modules: {},
