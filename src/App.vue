@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <navbar></navbar>
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/login">Login</router-link> |
@@ -11,13 +10,8 @@
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue';
-
 export default {
-  name: 'app',
-  components: {
-    Navbar
-  }
+  name: 'app'
 }
 </script>
 
