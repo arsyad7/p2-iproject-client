@@ -13,10 +13,11 @@
         <div class="row">
             <div class="col-3"></div>
             <div class="col-6 mb-3 mt-3">
-                <select v-model="currency" name="" id="">
+                <select v-model="currency" @change.prevent="changeCurrency" name="" id="">
                     <option value="">----- Select Currency -----</option>
-                    <option value="">EUR</option>
-                    <option value="">IDR</option>
+                    <option value="EUR">EUR</option>
+                    <option value="IDR">IDR</option>
+                    <option value="USD">USD</option>
                 </select>
             </div>
             <div class="col-3"></div>
@@ -35,7 +36,10 @@
                     </a>
                     <div class="card-body">
                         <h5 class="card-title">{{product.name}}</h5>
-                        <p class="card-text">{{product.price.formattedValue}}</p>
+                        <p v-if="currency === 'IDR'">Rp. {{(product.price.value * currentCurrency).toLocaleString("id-ID")}}</p>
+                        <p v-else-if="currency === 'EUR'">€ {{(product.price.value * currentCurrency).toFixed(2).toLocaleString("en-GB")}}</p>
+                        <p v-else-if="currency === 'USD'">$ {{(product.price.value * currentCurrency).toFixed(2).toLocaleString("en-US")}}</p>
+                        <p v-else class="card-text">{{product.price.formattedValue}}</p>
                         <a @click.prevent="addWishlist(product.name, product.price.value, product.images[0].url, product.articles[0].color.text, product.articles[0].code)" href="#" title="Love it" class="btn"><span>&#x2764;</span></a>
                     </div>
                 </div>
@@ -44,8 +48,8 @@
 
         <!-- Pagination -->
         <div class="row">
-            <div class="col-3"></div>
-            <div class="col-6 mb-3 mt-3">
+            <div class="col-4"></div>
+            <div class="col-4 mb-3 mt-3">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item">
@@ -66,7 +70,7 @@
                     </ul>
                 </nav>
             </div>
-            <div class="col-3"></div>
+            <div class="col-4"></div>
         </div>
     </div>
 </template>
@@ -86,6 +90,9 @@ export default {
     computed: {
         products() {
             return this.$store.state.products
+        },
+        currentCurrency() {
+            return this.$store.state.currency
         }
     },
     methods: {
@@ -106,6 +113,14 @@ export default {
             const payload = { name, price, imageUrl, color, code}
 
             this.$store.dispatch('addToWishlist', payload)
+        },
+        changeCurrency() {
+            const currency = this.currency
+            if (currency === '') {
+                this.$store.commit('SET_CURRENCY', null)
+            } else {
+                this.$store.dispatch('getCurrency', currency)
+            }
         }
     }
 }

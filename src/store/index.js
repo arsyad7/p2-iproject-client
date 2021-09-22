@@ -11,7 +11,8 @@ export default new Vuex.Store({
     details: null,
     imageUrl: '',
     price: '',
-    currency: ''
+    currency: null,
+    wishlists: []
   },
   mutations: {
     SET_ISLOGGEDIN(state, payload) {
@@ -31,6 +32,9 @@ export default new Vuex.Store({
     },
     SET_CURRENCY(state, payload) {
       state.currency = payload
+    },
+    SET_WISHLISTS(state, payload) {
+      state.wishlists = payload
     }
   },
   actions: {
@@ -83,14 +87,27 @@ export default new Vuex.Store({
         })
     },
     getCurrency({ commit }, currency) {
-      http.post('/products', currency)
+      http.post('/products', {currency})
         .then(resp => {
-          console.log(resp.data);
           commit('SET_CURRENCY', resp.data)
         })
         .catch(err => {
           console.log(err);
         })
+    },
+    fetchWishlists({ commit }) {
+      http.get('/wishlists', {
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+      .then(resp => {
+        console.log(resp.data);
+        commit('SET_WISHLISTS', resp.data)
+      })
+      .catch(err => {
+        console.log(err);
+      })
     }
   },
   modules: {},
