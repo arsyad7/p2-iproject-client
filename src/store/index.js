@@ -36,9 +36,14 @@ export default new Vuex.Store({
     login(context, payload) {
       return http.post('/users/login', payload)
     },
-    fetchProducts({ commit }) {
-      http.get('/products')
+    fetchProducts({ commit }, params) {
+      if (!params) {
+        params = ""
+      }
+      console.log(params);
+      http.get(`/products${params}`)
         .then(resp => {
+          console.log(resp.data);
           commit('SET_PRODUCTS', resp.data)
         })  
         .catch(err => {
@@ -76,3 +81,6 @@ export default new Vuex.Store({
   },
   modules: {},
 });
+
+
+// results.price.value <<< untuk ambil mentahan price
