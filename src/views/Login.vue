@@ -37,7 +37,10 @@
               id="exampleInputPassword1"
             />
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button><br />
+          <button type="submit" class="btn btn-primary">Submit</button><br /><br>
+          <div class=" text-center">
+            <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess" :onFailure="onFailure"></GoogleLogin>
+          </div><br>
           <p style="color: black">
             Dont have an account?
             <a @click.prevent="goToRegister" href="">register</a>
@@ -50,13 +53,24 @@
 
 <script>
 import swal from "sweetalert";
+import GoogleLogin from 'vue-google-login';
 
 export default {
   name: "Login",
+  components: {
+      GoogleLogin
+  },
   data() {
     return {
       email: "",
       password: "",
+      params: {
+          client_id: "690332269320-50q1jkq7850ars5t6uk9oo81i31ocfvr.apps.googleusercontent.com"
+      },
+      renderParams: {
+          width: 200,
+          longtitle: true
+      }
     };
   },
   methods: {
@@ -81,8 +95,28 @@ export default {
     goToRegister() {
       this.$router.push("/register");
     },
+    onSuccess(googleUser) {
+      this.$store.dispatch('signInGoogle', googleUser)
+      .then(resp => {
+          localStorage.setItem(
+              "access_token",
+              resp.data.access_token
+          );
+          this.$store.commit("SET_ISLOGGEDIN", true);
+          swal("Welcome!!", "Login Success", "success");
+          this.$router.push({ name: "Home" });
+      })
+      .catch(err => {
+          swal("Error!", `${err.response.data.message}`, "error");
+      })
+    },
+    onFailure(){},
   },
 };
 </script>
 
-<style></style>
+<style>
+.abcRioButton {
+    margin: 0 auto;
+}
+</style>

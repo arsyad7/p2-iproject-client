@@ -107,7 +107,6 @@ export default new Vuex.Store({
           },
         })
         .then((resp) => {
-          console.log("kepanggil");
           commit("SET_WISHLISTS", resp.data);
         })
         .catch((err) => {
@@ -121,6 +120,13 @@ export default new Vuex.Store({
         },
       });
     },
+    signInGoogle(context, payload) {
+      const id_token = payload.getAuthResponse().id_token;
+
+      return http.post("/users/authGoogle", {
+        idToken: id_token
+      })
+    }
   },
   modules: {},
 });

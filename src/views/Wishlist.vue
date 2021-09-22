@@ -1,33 +1,35 @@
 <template>
-  <div class="container py-5">
-    <!-- Card -->
-    <div class="row d-flex justify-content-center align-items-center">
-      <div
-        v-for="product in wishlists"
-        :key="product.id"
-        class="card col-4 m-2 ml-3 mr-3 shadow"
-        style="width: 18rem"
-      >
-        <div>
-          <a
-            @click.prevent="
-              seeDetails(product.code, product.imageUrl, product.price)
-            "
-            href=""
-          >
-            <img :src="product.imageUrl" class="card-img-top" alt="..." />
-          </a>
-          <div class="card-body">
-            <h5 class="card-title">{{ product.name }}</h5>
-            <p class="card-text">{{ product.color }}</p>
-            <p class="card-text">{{ product.price }}</p>
+  <div>
+    <div class="container py-5">
+      <!-- Card -->
+      <div class="row d-flex justify-content-center align-items-center">
+        <div
+          v-for="product in wishlists"
+          :key="product.id"
+          class="card col-4 m-2 ml-3 mr-3 shadow"
+          style="width: 18rem"
+        >
+          <div>
             <a
-              @click.prevent="deleteWishlist(product.id)"
-              href="#"
-              title="Love it"
-              class="btn"
-              ><span>remove</span></a
+              @click.prevent="
+                seeDetails(product.code, product.imageUrl, product.price)
+              "
+              href=""
             >
+              <img :src="product.imageUrl" class="card-img-top" alt="..." />
+            </a>
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text">{{ product.color }}</p>
+              <p class="card-text">{{ product.price }}</p>
+              <a
+                @click.prevent="deleteWishlist(product.id)"
+                href="#"
+                title="Love it"
+                class="btn"
+                ><span>remove</span></a
+              >
+            </div>
           </div>
         </div>
       </div>
