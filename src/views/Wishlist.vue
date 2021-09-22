@@ -15,7 +15,7 @@
                         <h5 class="card-title">{{product.name}}</h5>
                         <p class="card-text">{{product.color}}</p>
                         <p class="card-text">{{product.price}}</p>
-                        <!-- <a href="#" title="Love it" class="btn"><span>&#x2764;</span></a> -->
+                        <a @click.prevent="deleteWishlist(product.id)" href="#" title="Love it" class="btn"><span>remove</span></a>
                     </div>
                 </div>
             </div>
@@ -41,6 +41,10 @@ export default {
             this.$store.commit('SET_IMAGEURL', imageUrl)
             this.$store.commit('SET_PRICE', price)
         },
+        deleteWishlist(id) {
+            this.$store.dispatch('deleteWishlist', id)
+            this.$store.dispatch('fetchWishlists')
+        }
     }
 }
 </script>

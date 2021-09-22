@@ -108,6 +108,19 @@ export default new Vuex.Store({
       .catch(err => {
         console.log(err);
       })
+    },
+    deleteWishlist(context, id) {
+      http.delete(`/wishlists/${id}`, {
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+      .then(resp => {
+        console.log(resp.data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
     }
   },
   modules: {},
