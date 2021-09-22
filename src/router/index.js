@@ -22,26 +22,22 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: () =>
-      import("../views/Login.vue"),
+    component: () => import("../views/Login.vue"),
   },
   {
     path: "/register",
     name: "Register",
-    component: () =>
-      import("../views/Register.vue"),
+    component: () => import("../views/Register.vue"),
   },
   {
     path: "/details/:code",
     name: "Details",
-    component: () =>
-      import("../views/Details.vue"),
+    component: () => import("../views/Details.vue"),
   },
   {
     path: "/wishlists",
     name: "Wishlist",
-    component: () =>
-      import("../views/Wishlist.vue"),
+    component: () => import("../views/Wishlist.vue"),
   },
 ];
 
@@ -57,18 +53,18 @@ router.beforeEach((to, from, next) => {
 
   switch (destination) {
     case "Login":
-      access_token ? next('/') : next()
+      access_token ? next("/") : next();
       break;
     case "Register":
-      access_token ? next('/') : next()
+      access_token ? next("/") : next();
       break;
     case "Wishlist":
-      access_token ? next() : next('/login')
+      access_token ? next() : next("/login");
       break;
     default:
-      next()
+      next();
       break;
   }
-})
+});
 
 export default router;
