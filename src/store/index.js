@@ -10,7 +10,8 @@ export default new Vuex.Store({
     products: [],
     details: null,
     imageUrl: '',
-    price: ''
+    price: '',
+    currency: ''
   },
   mutations: {
     SET_ISLOGGEDIN(state, payload) {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     SET_PRICE(state, payload) {
       state.price = payload
+    },
+    SET_CURRENCY(state, payload) {
+      state.currency = payload
     }
   },
   actions: {
@@ -73,6 +77,16 @@ export default new Vuex.Store({
       })
         .then(resp => {
           console.log(resp.data);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    },
+    getCurrency({ commit }, currency) {
+      http.post('/products', currency)
+        .then(resp => {
+          console.log(resp.data);
+          commit('SET_CURRENCY', resp.data)
         })
         .catch(err => {
           console.log(err);

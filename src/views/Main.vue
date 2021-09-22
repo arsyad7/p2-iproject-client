@@ -1,19 +1,19 @@
 <template>
     <div class="container py-5">
         <div class="jumbotron text-white jumbotron-image shadow" style="background-image: url(https://images.unsplash.com/photo-1552152974-19b9caf99137?fit=crop&w=1350&q=80);"><br>
-        <h2 class="mb-4">
+        <h2 class="mb-4"><br>
             Fashion is the armor to survive the reality of everyday life.
         </h2>
         <p class="mb-4">
             - BILL CUNNINGHAM -
         </p>
-        <br><br><br>
+        <br><br>
         </div><br>
 
         <div class="row">
             <div class="col-3"></div>
             <div class="col-6 mb-3 mt-3">
-                <select name="" id="">
+                <select v-model="currency" name="" id="">
                     <option value="">----- Select Currency -----</option>
                     <option value="">EUR</option>
                     <option value="">IDR</option>
@@ -24,7 +24,7 @@
 
         <!-- Card -->
         <div class="row d-flex justify-content-center align-items-center">
-            <div v-for="product in products.results" :key="product.articles.code" class="card col-4 m-2 ml-3 mr-3 shadow" style="width: 18rem">
+            <div v-for="product in products.results" :key="product.articles[0].code" class="card col-4 m-2 ml-3 mr-3 shadow" style="width: 18rem">
                 <div>
                     <a @click.prevent="seeDetails(product.articles[0].code, product.images[0].url, product.price.formattedValue)" href="">
                         <img
@@ -36,7 +36,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{product.name}}</h5>
                         <p class="card-text">{{product.price.formattedValue}}</p>
-                        <a href="#" title="Love it" class="btn"><span>&#x2764;</span></a>
+                        <a @click.prevent="addWishlist(product.name, product.price.value, product.images[0].url, product.articles[0].color.text, product.articles[0].code)" href="#" title="Love it" class="btn"><span>&#x2764;</span></a>
                     </div>
                 </div>
             </div>
@@ -76,7 +76,8 @@ export default {
     name: 'Main',
     data() {
         return {
-            params: '?'
+            params: '?',
+            currency: ''
         }
     },
     created() {
@@ -100,6 +101,11 @@ export default {
                 this.$store.dispatch('fetchProducts', this.params);
                 this.params = '?';
             }
+        },
+        addWishlist(name, price, imageUrl, color, code) {
+            const payload = { name, price, imageUrl, color, code}
+
+            this.$store.dispatch('addToWishlist', payload)
         }
     }
 }
