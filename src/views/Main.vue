@@ -17,21 +17,22 @@
     <br />
 
     <div class="row">
-      <div class="col-3"></div>
-      <div class="col-6 mb-3 mt-3">
+      <div class="col-5"></div>
+      <div class="col-2 mb-3 mt-3">
         <select
+          class="form-control"
           v-model="currency"
           @change.prevent="changeCurrency"
           name=""
           id=""
         >
-          <option value="">----- Select Currency -----</option>
+          <option value="">                     ----- Select Currency -----</option>
           <option value="EUR">EUR</option>
           <option value="IDR">IDR</option>
           <option value="USD">USD</option>
         </select>
       </div>
-      <div class="col-3"></div>
+      <div class="col-5"></div>
     </div>
 
     <!-- Card -->

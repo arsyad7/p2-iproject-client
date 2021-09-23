@@ -85,8 +85,8 @@ export default new Vuex.Store({
         .then(() => {
           swal("Added!!", "Added to your wishlist", "success");
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          swal("Error!!", "Login First!!", "error");
         });
     },
     getCurrency({ commit }, currency) {
@@ -122,7 +122,7 @@ export default new Vuex.Store({
     },
     signInGoogle(context, payload) {
       const id_token = payload.getAuthResponse().id_token;
-
+      // console.log(payload.getAccessToken(), '<<<<<<<<<<<<<<<<<');
       return http.post("/users/authGoogle", {
         idToken: id_token
       })
